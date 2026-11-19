@@ -38,7 +38,7 @@ _MAX_COLUMN_WIDTH = 60
 
 
 def write_test_cases(test_cases, parameter_names, generation_date,
-                     output_dir=config.OUTPUT_DIR):
+                     output_dir=None):
     """
     Write test cases (IDs already assigned) to a new workbook.
 
@@ -46,12 +46,13 @@ def write_test_cases(test_cases, parameter_names, generation_date,
         test_cases:      merged list in §14 order, with IDs (§13).
         parameter_names: parameter names in original input order.
         generation_date: 'YYYYMMDD', taken from the run timestamp.
-        output_dir:      folder to write into.
+        output_dir:      folder to write into (default: config.OUTPUT_DIR,
+                         read at call time so tests can redirect it).
 
     Returns:
         Path of the file written.
     """
-    output_dir = Path(output_dir)
+    output_dir = Path(output_dir or config.OUTPUT_DIR)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     columns = config.LEADING_COLUMNS + list(parameter_names) + config.TRAILING_COLUMNS

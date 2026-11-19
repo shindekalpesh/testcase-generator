@@ -151,5 +151,21 @@ testcase-generator/
 ├── input/         Put input files here
 ├── output/        Generated files appear here
 ├── logs/          Log file
+├── tests/         Automated tests
 └── main.py        Entry point
 ```
+
+---
+
+## Running the Tests
+
+For anyone changing the code. Testers running the tool don't need this.
+
+```bash
+pip install -r requirements-dev.txt
+python -m pytest
+```
+
+Expected result: `60 passed`. The tests write only to temporary folders, so your `input/`, `output/` and `logs/` are untouched.
+
+Run them before and after every change. If a test fails, the message names the test and shows what was expected and what came out.

@@ -17,6 +17,7 @@ Produces one line:
 """
 
 import logging
+from pathlib import Path
 
 from config import config
 
@@ -25,13 +26,18 @@ from config import config
 _HANDLER_MARKER = "_testcase_generator_handler"
 
 
-def setup_logging(log_file=config.LOG_FILE, level=logging.INFO):
-    """Attach the file handler once. Call this at program start (main.py)."""
+def setup_logging(log_file=None, level=logging.INFO):
+    """
+    Attach the file handler once. Call this at program start (main.py).
+    log_file defaults to config.LOG_FILE, read at call time so tests can
+    redirect it.
+    """
     root = logging.getLogger()
 
     if any(getattr(h, _HANDLER_MARKER, False) for h in root.handlers):
         return
 
+    log_file = Path(log_file or config.LOG_FILE)
     log_file.parent.mkdir(parents=True, exist_ok=True)
 
     handler = logging.FileHandler(log_file, encoding="utf-8")
